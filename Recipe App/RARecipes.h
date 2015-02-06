@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface RARecipes : NSObject
+
++ (NSArray *)recipes;
 
 + (NSInteger)count;
 

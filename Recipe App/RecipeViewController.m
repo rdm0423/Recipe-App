@@ -8,11 +8,14 @@
 
 #import "RecipeViewController.h"
 #import "RecipiesTableViewDataSource.h"
+#import "DetailViewController.h"
+#import "RARecipes.h"
 
-@interface RecipeViewController ()
+@interface RecipeViewController () <UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) RecipiesTableViewDataSource *dataSource;
+@property (nonatomic, strong) DetailViewController *dvc;
 
 @end
 
@@ -28,10 +31,25 @@
     self.dataSource = [RecipiesTableViewDataSource new];
     
     self.tableView.dataSource = self.dataSource;
-        
+    self.tableView.delegate = self;
     [self.dataSource registerTableView:self.tableView];
     
+    self.dvc = [DetailViewController new];
+    
     self.title = @"Recipe App";
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    DetailViewController *detailViewController = [DetailViewController new];
+    
+    detailViewController.recipeIndex = indexPath.row;
+    
+    
+    self.dvc.title = [RARecipes titleAtIndex:indexPath.row];
+    
+    [self.navigationController pushViewController:self.dvc animated:YES];
     
 }
 
