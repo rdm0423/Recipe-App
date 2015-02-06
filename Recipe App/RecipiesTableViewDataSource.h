@@ -11,8 +11,10 @@
 
 @interface RecipiesTableViewDataSource : NSObject <UITableViewDataSource>
 
+//@property (nonatomic, strong) NSArray *images;
 
 - (void)registerTableView:(UITableView *)tableView;
 
+//- (CGFloat)heightForIndexPath:(NSIndexPath *)indexPath;
 
 @end

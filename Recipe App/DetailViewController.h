@@ -11,6 +11,7 @@
 @interface DetailViewController : UIViewController
 
 @property (nonatomic, assign) NSInteger recipeIndex;
+
 //there to track value in the array (so recipe things match)
 
 @end

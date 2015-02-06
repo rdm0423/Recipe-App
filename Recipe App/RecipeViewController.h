@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RecipeViewController : UIViewController
+@property (nonatomic, strong) UIImage *image;
 
 @end

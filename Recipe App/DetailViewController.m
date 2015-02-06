@@ -17,25 +17,33 @@ static CGFloat margin = 15;
 
 @implementation DetailViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor lightGrayColor];
     
-    CGFloat topMargin = 65;
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:scrollView];
+    scrollView.scrollEnabled = YES;
+    
+    CGFloat topMargin = 20;
     CGFloat heightForDescription = [self heightForDescription:[RARecipes descriptionAtIndex:self.recipeIndex]];
     CGFloat labelWidth = self.view.frame.size.width - 2 * margin;
     
     
 //    UIImageView *recipeImage = [[UIImageView alloc] initWithFrame:CGRectMake(15, 70, 200, 125)];
-
+    UIImageView *recipeImage = [[UIImageView alloc] initWithFrame:CGRectMake(200, 70, 50, 50)];
+    recipeImage.image = [UIImage imageNamed:[RARecipes imageAtIndex:self.recipeIndex]];
+    [scrollView addSubview:recipeImage];
     
     //description label
     UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(margin, topMargin, labelWidth, 20)];
     descriptionLabel.text = @"Description";
     descriptionLabel.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
-    [self.view addSubview:descriptionLabel];
+    [scrollView addSubview:descriptionLabel];
     
     // need to adjust top margin for every label
     
@@ -46,16 +54,16 @@ static CGFloat margin = 15;
     recipeDescription.text = [RARecipes descriptionAtIndex:self.recipeIndex];
     recipeDescription.numberOfLines = 0;
     recipeDescription.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-    [self.view addSubview:recipeDescription];
+    [scrollView addSubview:recipeDescription];
     
 //    top += 20 + margin;
     CGFloat top = topMargin + heightForDescription + margin * 2;
     
     //ingredient label
-    UILabel *ingredientList = [[UILabel alloc] initWithFrame:CGRectMake(margin, top, labelWidth, 44)];
+    UILabel *ingredientList = [[UILabel alloc] initWithFrame:CGRectMake(margin, top, labelWidth, 20)];
     ingredientList.text = @"Ingredients";
     ingredientList.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
-    [self.view addSubview:ingredientList];
+    [scrollView addSubview:ingredientList];
     
     //
 //    UILabel *ingredientType = [[UILabel alloc] initWithFrame:CGRectMake(15, 200, labelWidth, 44)];
@@ -68,18 +76,51 @@ static CGFloat margin = 15;
         UILabel *volume = [[UILabel alloc] initWithFrame:CGRectMake(margin, top, labelWidth / 4, 20)];
         volume.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
         volume.text = [RARecipes ingredientVolumeAtIndex:i inRecipeAtIndex:self.recipeIndex];
-        [self.view addSubview:volume];
+        [scrollView addSubview:volume];
         
         UILabel *type = [[UILabel alloc] initWithFrame:CGRectMake(margin + labelWidth / 4, top, labelWidth * 3 / 4, 20)];
         type.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
         type.numberOfLines = 0;
         type.text = [RARecipes ingredientTypeAtIndex:i inRecipeAtIndex:self.recipeIndex];
-        [self.view addSubview:type];
-        
+        [scrollView addSubview:type];
 
         top += (20 + margin);
         
     }
+    
+    top += margin;
+    
+    UILabel *directionsLabel = [[UILabel alloc] initWithFrame:CGRectMake(margin, top, labelWidth, 20)];
+    directionsLabel.text = @"Directions";
+    directionsLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    [scrollView addSubview:directionsLabel];
+    
+    top += 20 + margin;
+    
+    for (int i = 0; i < [[RARecipes directionsAtIndex:self.recipeIndex] count]; i++) {
+        
+        CGFloat height = [self heightForDirections:[RARecipes directionsAtIndex:self.recipeIndex][i]];
+        
+        UILabel *count = [[UILabel alloc] initWithFrame:CGRectMake(margin, top, labelWidth, 15)];
+        count.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+        count.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
+        count.text = [NSString stringWithFormat:@"Step %d", i + 1];
+        [scrollView addSubview:count];
+        
+        UILabel *direction = [[UILabel alloc] initWithFrame:CGRectMake(margin, top + 5, labelWidth, height)];
+        direction.numberOfLines = 0;
+        direction.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+        direction.text = [RARecipes directionsAtIndex:self.recipeIndex][i];
+        [scrollView addSubview:direction];
+        
+        top += (height + margin);
+    
+    }
+    
+    
+    
+    //set the content size of the scrollview after we've added all the labels so that we know how tall the size needs to be.
+    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height * 3);
     
 }
 
