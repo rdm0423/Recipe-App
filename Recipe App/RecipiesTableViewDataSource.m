@@ -34,7 +34,7 @@
     
 //    cell.imageView.image = [UIImage imageNamed:[self.images objectAtIndex:indexPath.row]];
     
-//    cell.imageView.image = [UIImage imageNamed:[RARecipes imageAtIndex:indexPath.row]];
+    cell.imageView.image = [UIImage imageNamed:[RARecipes imageAtIndex:indexPath.row]];
     
     return cell;
 }

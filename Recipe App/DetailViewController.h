@@ -12,6 +12,6 @@
 
 @property (nonatomic, assign) NSInteger recipeIndex;
 
-//there to track value in the array (so recipe things match)
+//there to track value in the array (so recipe things match) used assign as it has to do with a value
 
 @end

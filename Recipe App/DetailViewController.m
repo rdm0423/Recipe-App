@@ -33,10 +33,10 @@ static CGFloat margin = 15;
     CGFloat heightForDescription = [self heightForDescription:[RARecipes descriptionAtIndex:self.recipeIndex]];
     CGFloat labelWidth = self.view.frame.size.width - 2 * margin;
     
-    
-//    UIImageView *recipeImage = [[UIImageView alloc] initWithFrame:CGRectMake(15, 70, 200, 125)];
+    //food image
     UIImageView *recipeImage = [[UIImageView alloc] initWithFrame:CGRectMake(200, 70, 50, 50)];
-    recipeImage.image = [UIImage imageNamed:[RARecipes imageAtIndex:self.recipeIndex]];
+    NSString *imageString = [NSString stringWithFormat:@"%@",[RARecipes imageAtIndex:self.recipeIndex]];
+    recipeImage.image = [UIImage imageNamed:imageString];
     [scrollView addSubview:recipeImage];
     
     //description label
@@ -45,8 +45,8 @@ static CGFloat margin = 15;
     descriptionLabel.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
     [scrollView addSubview:descriptionLabel];
     
-    // need to adjust top margin for every label
     
+    // need to adjust top margin for every label
     CGFloat tempTop = topMargin + 20;
     
     //Recipe Description
@@ -56,7 +56,7 @@ static CGFloat margin = 15;
     recipeDescription.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     [scrollView addSubview:recipeDescription];
     
-//    top += 20 + margin;
+    // variable to track top value
     CGFloat top = topMargin + heightForDescription + margin * 2;
     
     //ingredient label
@@ -64,10 +64,6 @@ static CGFloat margin = 15;
     ingredientList.text = @"Ingredients";
     ingredientList.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
     [scrollView addSubview:ingredientList];
-    
-    //
-//    UILabel *ingredientType = [[UILabel alloc] initWithFrame:CGRectMake(15, 200, labelWidth, 44)];
-//    ingredientType.text = [RARecipes
     
     top += 20 + margin;
     
@@ -119,8 +115,8 @@ static CGFloat margin = 15;
     
     
     
-    //set the content size of the scrollview after we've added all the labels so that we know how tall the size needs to be.
-    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height * 3);
+    //setting content size of the scrollview after all the labels to account for total size.
+    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height * 2.5);
     
 }
 
@@ -129,7 +125,7 @@ static CGFloat margin = 15;
     // Dispose of any resources that can be recreated.
 }
 
-#pragma Mark adjusting height
+#pragma Mark adjusting height - Josh Code
 
 - (CGFloat)heightForDescription:(NSString *)description {
     
